@@ -1,0 +1,46 @@
+
+### MY CONFIG ###
+
+# Show files in the directory you switch to
+function cd() {
+  builtin cd "$1" && ls
+}
+
+alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
+alias upgrade="update"
+alias ld="du -hd 1"         # Show sizes of directories
+alias rm="trash-put"        # rm now puts files in trash instead of removing them pernamently
+alias rmp="/usr/bin/rm"     # tmp removes files pernamently
+alias mv="mv -i"            # Ask before overwritting
+alias cp="cp -i"            # Ask before overwritting
+alias sudo="sudo "          # Fix using sudo with custom aliases
+alias tarr="tar -czvf"      # Create tar.gz archive
+alias untar="tar -xzvf"     # Extract tar.gz archive
+alias copy="xclip -selection clipboard" # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
+
+export EDITOR=/usr/bin/nano # Use nano as default editor for some command
+
+_sto="/media/pendrive/"
+alias storage="cd $_sto"
+alias sto=storage
+
+_enc="/media/veracrypt/"
+alias encrypted="cd $_enc"
+alias enc=encrypted
+
+
+# Launch tmux at start
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  session="main"
+
+  tmux has-session -t $session 2>/dev/null
+  if [ $? != 0 ]; then
+    exec tmux new-session -s main
+  fi
+
+  if tmux list-sessions -F "#{session_name}: #{session_attached}" | grep -q "^$session: 1$"; then
+    exec tmux new-session
+  else
+    exec tmux attach-session -t $session
+  fi
+fi
