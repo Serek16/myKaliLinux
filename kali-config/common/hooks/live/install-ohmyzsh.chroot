@@ -1,0 +1,20 @@
+mkdir -p /home/kali
+
+# Run by root but install for kali
+export ZSH="/home/kali/.oh-my-zsh"
+export ZDOTDIR="/home/kali"
+export USER="kali"
+export HOME="/home/kali"
+
+# Download and run ohmyzsh installer
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Change theme to "kali-like"
+mv /kali-like.zsh-theme /home/kali/.oh-my-zsh/themes/kali-like.zsh-theme
+sed -i 's/^ZSH_THEME=.*$/ZSH_THEME="kali-like"/' /home/kali/.zshrc
+
+cat /zshrc_addition >> /home/kali/.zshrc
+rm /zshrc_addition
+
+#     kali:kali
+chown 1000:1000 -R /home/kali
