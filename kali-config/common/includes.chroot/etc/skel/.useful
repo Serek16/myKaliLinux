@@ -1,0 +1,92 @@
+Alt + .            # Paste the path used in a previous command
+watch <cmd>        # Execute a program periodically. Allows to see changes
+fg                 # Resume stopped job (meaning after "ctrl+z")
+sftp               # Interactive alternative to scp ('l<cmd>' to run locally  e.g. "lls -l")
+wc -l <file>       # Show number of lines in a text file
+Ctrl + l           # Clear terminal output
+wol -p 9 <mac>     # Wake on lan command
+<cmd> | xclip -selection clipboard
+<cmd> | copy
+                   # Copy command output to a clipboard
+
+# Discoover hosts in the network (Ping Scan) (faster)
+namp -sn 192.168.1.0/24
+
+# Discover hosts in the network  and check for open ports  (longer, more info)
+namp -sS 192.168.1.0/24
+
+# Enable OS detection, version detection, script scanning, and traceroute (even more info, even longer)
+nmap -A 192.168.1.0/24
+
+# 22  - SSH
+# 80  - HTTP
+# 443 - HTTPS
+# 25565 - MC SERVER
+
+ip route         # Get ip of the router (default gateway)
+
+
+# Checksum
+sha256sum ./<file_to_check>
+sha256sum -c ./<file_with_verification_checksum>
+
+
+# sftp - transfer files to a remote server
+sftp -oIdentityFile=<pathToKey> -poPort=<port> user@ip_addr
+lls -l         # show files on local device device
+ls -l          # show files on remote device
+get <filename> # download file from remote device
+put <filename> # upload file to rmote device
+
+
+# Windows force shutdown immediately
+shutdown /s /f /t 0
+
+
+# Arch pacman
+sudo pacman -Syu <package_name> # apt update && apt upgrade && apt install <package_name>
+sudo pacman -Rns <package_name> # uninstall package and no longer needed dependencies
+sudo pacman -Ss  <package_name> # search for package
+sudo pacman -Qi  <package_name> # check if package is installed. Print some info
+
+
+# Mount VeraCrypt drive with cryptsetup
+open --veracrypt --type tcrypt <path_to_drive> custom_name
+sudo mkdir /mnt/veracrypt
+sudo mount /dev/mapper/custom_name /mnt/veracrypt -o uid=<user> -o gid=<user>
+
+# Close Veracrypt drive
+sudo umount /dev/mapper/custom_name
+sudo cryptsetup close custom_name
+
+
+# For i loop
+for i in $(seq 1 10); do echo $i; done
+$ OR
+for i in $(seq 1 10);
+do
+    echo $i
+done
+
+
+# If statement
+if [ condition ]; then echo Hello, World; fi
+conditions:
+    ! expression          True if the expression is false.
+    -n string             True if the length of the string is greater than zero.
+    -z string             True if the length of the string is zero. That is, it's an empty string.
+    string1 = string2     True if string1 is the same as string2.
+    string1 != string2    True if string1 is not the same as string2.
+    integer1 -eq integer2 True if integer1 is numerically equal to integer2
+    integer1 -qt integer2 True if integer1 is numerically greater than integer2
+    integer1 -lt integer2 True if integer1 is numerically less than integer2
+    -d directory          True if the directory exists.
+    -e file               True if the file exists.
+    -s file               True if the file exists with a size of more than zero.
+    -r file               True if the file exists and the read permission is set.
+    -w file               True if the file exists and the write permission is set.
+    -x file               True if the file exists and the execute permission is set.
+
+# Arithmetic Expansion. Increment integer
+$((expression))
+((i=i+1))

@@ -1,0 +1,3 @@
+systemctl enable systemd-resolved
+wget -O "/etc/openvpn/update-resolv-conf" "https://raw.githubusercontent.com/ProtonVPN/scripts/master/update-resolv-conf.sh"
+chmod +x /etc/openvpn/update-resolv-conf
