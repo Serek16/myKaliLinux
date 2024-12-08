@@ -56,8 +56,8 @@ if [ -e /var/lib/live/config/kali-user-setup ]; then
     exit 0
 fi
 
-# Set "kali" as password for the user kali
-usermod -p 'AqLUsDitNnTsw' kali
+# Set "ilak" as password for the user kali (perl -e 'print crypt("ilak", "Aq"),"\n"')
+usermod -p 'Aqnsj.8n7pb6.' kali
 
 # Apply various configuration
 configure_zsh

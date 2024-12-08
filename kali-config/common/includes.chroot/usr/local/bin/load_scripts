@@ -1,0 +1,29 @@
+!/bin/bash
+
+# Define the base paths
+_sto="/media/$USER/Pendrive"
+_enc="/media/$USER/veracrypt1"
+
+# Define the script relative paths
+script1="$_sto/scripts/script.sh"
+script2="$_sto/script.sh"
+script3="$_enc/scripts/script.sh"
+script4="$_enc/script.sh"
+
+# Check each location and run the script from the first one found
+if [ -e "$script1" ]; then
+    echo "Launching $script1"
+    bash "$script1"
+elif [ -e "$script2" ]; then
+    echo "Launching $script2"
+    bash "$script2"
+elif [ -e "$script3" ]; then
+    echo "Launching $script3"
+    bash "$script3"
+elif [ -e "$script4" ]; then
+    echo "Launching $script4"
+    bash "$script4"
+else
+    echo "No script found in any of the expected locations."
+    exit 1
+fi
