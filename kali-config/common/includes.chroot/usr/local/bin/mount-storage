@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MOUNT_POINT="/media/pendrive"
+DEVICE="/dev/$1"
+
+# Create mount point if it doesn't exist
+mkdir -p "$MOUNT_POINT"
+
+# Check if the device is already mounted
+if mount | grep "$DEVICE" > /dev/null; then
+    echo "$DEVICE is already mounted."
+    exit 0
+fi
+
+# Attempt to mount the device to the mount point
+if ! /usr/bin/systemd-mount --no-block "$DEVICE" "$MOUNT_POINT"; then
+    echo "Failed to mount $DEVICE to $MOUNT_POINT"
+    exit 1
+fi

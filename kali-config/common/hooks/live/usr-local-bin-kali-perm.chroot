@@ -1,0 +1,4 @@
+#     kali:kali
+chown 1000:1000 /usr/local/bin/load_scripts
+chown 1000:1000 /usr/local/bin/mount-encrypted-storage
+chown 1000:1000 /usr/local/bin/mount-storage

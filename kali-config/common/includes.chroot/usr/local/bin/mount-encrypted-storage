@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Define variables
+PENDRIVE_MOUNT_POINT="/media/pendrive"
+CONTAINER_PATH="$PENDRIVE_MOUNT_POINT/container.hc"
+VERACRYPT_MOUNT_POINT="/media/veracrypt"
+STORAGE_SCRIPT="$HOME/.load_storage.sh"
+
+# Check if /media/Pendrive exists
+if [ ! -d "$PENDRIVE_MOUNT_POINT" ]; then
+    echo "$PENDRIVE_MOUNT_POINT not found. Running $STORAGE_SCRIPT..."
+
+    # Run the script to load the storage
+    if ! bash "$STORAGE_SCRIPT"; then
+        echo "Failed to load storage. Exiting."
+        exit 1
+    fi
+
+    # Check again if /media/Pendrive exists after running the script
+    if [ ! -d "$PENDRIVE_MOUNT_POINT" ]; then
+        echo "Storage script did not create $PENDRIVE_MOUNT_POINT. Exiting."
+        exit 1
+    fi
+fi
+
+# Create mount point directory if it does not exist
+sudo mkdir -p "$VERACRYPT_MOUNT_POINT"
+
+# Mount the VeraCrypt volume
+sudo cryptsetup open --type tcrypt --veracrypt "$CONTAINER_PATH" encrypted-container
+sudo mount /dev/mapper/encrypted-container "$VERACRYPT_MOUNT_POINT" -o uid=$(whoami) -o gid=$(whoami)
+
+# Change permissions to user kali
+#sudo chown $(whoami):$(whoami) "$VERACRYPT_MOUNT_POINT"
+
+# Check if the mount was successful
+if [ $? -eq 0 ]; then
+    echo "Volume successfully mounted to $VERACRYPT_MOUNT_POINT"
+else
+    echo "Failed to mount the volume. Please check your password and try again."
+    exit 1
+fi
