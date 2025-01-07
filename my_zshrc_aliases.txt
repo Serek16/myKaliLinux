@@ -1,0 +1,15 @@
+root="/home/kali/live-build-config"
+alias main="cd $root"
+alias hooks="cd $root/kali-config/common/hooks/live"
+
+chroot="$root/kali-config/common/includes.chroot"
+alias chroot="cd $chroot"
+alias skel="$chroot/etc/skel"
+alias udev="$chroot/etc/udev/rules.d"
+alias profiled="$chroot/etc/profile.d"
+alias kaliconf="$chroot/usr/lib/live/config"
+alias lbin="$chroot/usr/local/bin"
+
+alias chroot2="cd $root/config/includes.chroot"
+
+alias build="cd $root && ./build.sh --verbose"
