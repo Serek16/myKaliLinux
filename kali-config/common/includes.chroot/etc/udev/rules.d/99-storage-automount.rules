@@ -1,1 +1,1 @@
-ACTION=="add", KERNEL=="sd[a-z]3", ATTRS{idProduct}=="1000", ATTRS{idVendor}=="090c", ATTRS{manufacturer}=="Samsung", ENV{ID_FS_TYPE}!="", RUN="/usr/local/bin/mount-storage %k"
+ACTION=="add", ENV{ID_PART_ENTRY_UUID}=="5a8f9757-3620-433d-a6cb-f187e2580085", RUN="/usr/local/bin/mount-storage %k"

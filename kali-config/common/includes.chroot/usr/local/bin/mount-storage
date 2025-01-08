@@ -13,7 +13,7 @@ if mount | grep "$DEVICE" > /dev/null; then
 fi
 
 # Attempt to mount the device to the mount point
-if ! /usr/bin/systemd-mount --no-block "$DEVICE" "$MOUNT_POINT"; then
+if ! /usr/bin/systemd-mount --no-block -t exfat -o rw,uid=1000,gid=1000 "$DEVICE" "$MOUNT_POINT"; then
     echo "Failed to mount $DEVICE to $MOUNT_POINT"
     exit 1
 fi
