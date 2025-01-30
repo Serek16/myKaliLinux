@@ -25,7 +25,17 @@ alias storage="cd $_sto"
 alias sto=storage
 
 _enc="/media/veracrypt/"
-alias encrypted="cd $_enc"
+function encrypted() {
+  if [ -w "$_enc" ]; then
+    cd "$_enc"
+  else
+    echo "Veracrypt storage isn't mounted. Mounting now..."
+    mount-encrypted-storage
+    if [ $? == 0 ]; then
+      cd "$_enc"
+    fi
+  fi
+}
 alias enc=encrypted
 
 function ion() {
