@@ -6,7 +6,8 @@ tmux
 trash-cli
 xclip
 neofetch
-systemd-resolved
+openvpn
+openresolv
 cryptsetup
 numlockx
 hcxdumptool
