@@ -28,6 +28,15 @@ _enc="/media/veracrypt/"
 alias encrypted="cd $_enc"
 alias enc=encrypted
 
+function ion() {
+  sudo systemctl start wpa_supplicant
+  sudo systemctl start NetworkManager
+}
+
+function ioff() {
+  sudo systemctl stop NetworkManager
+  sudo systemctl stop wpa_supplicant
+}
 
 # Launch tmux at start
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
