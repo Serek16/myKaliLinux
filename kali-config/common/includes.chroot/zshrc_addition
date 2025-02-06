@@ -16,7 +16,8 @@ alias cp="cp -i"            # Ask before overwritting
 alias sudo="sudo "          # Fix using sudo with custom aliases
 alias tarr="tar -czvf"      # Create tar.gz archive
 alias untar="tar -xzvf"     # Extract tar.gz archive
-alias copy="xclip -selection clipboard" # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
+alias copy="xclip -selection clipboard"
+alias c=copy                # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
 

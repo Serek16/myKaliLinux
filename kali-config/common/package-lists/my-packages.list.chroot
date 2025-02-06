@@ -5,7 +5,9 @@ wget
 tmux
 trash-cli
 xclip
-neofetch
+
+autossh
+wireguard
 openvpn
 openresolv
 cryptsetup
