@@ -26,6 +26,10 @@ nmap -A 192.168.1.0/24
 ip route         # Get ip of the router (default gateway)
 
 
+# Show available wifi, transfer rate, signal strength and security
+nmcli dev wifi
+
+
 # Checksum
 sha256sum ./<file_to_check>
 sha256sum -c ./<file_with_verification_checksum>
@@ -87,6 +91,13 @@ conditions:
     -w file               True if the file exists and the write permission is set.
     -x file               True if the file exists and the execute permission is set.
 
-# Arithmetic Expansion. Increment integer
+# Arithmetic expansion - increment integer
 $((expression))
 ((i=i+1))
+
+# BASH special variables
+$? - exit code of the last executed command
+$! - PID of the last executed command
+$0 - name of the script or shell
+$@ - all positional parameters
+$# - number of positional parameters

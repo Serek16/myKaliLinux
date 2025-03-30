@@ -10,30 +10,32 @@ alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
 alias upgrade="update"
 alias ld="du -hd 1"         # Show sizes of directories
 alias rm="trash-put"        # rm now puts files in trash instead of removing them pernamently
-alias rmp="/usr/bin/rm"     # tmp removes files pernamently
+alias rmm="/usr/bin/rm"
 alias mv="mv -i"            # Ask before overwritting
+alias mvv="/usr/bin/mv"
 alias cp="cp -i"            # Ask before overwritting
+alias cpp="/usr/bin/cp"
 alias sudo="sudo "          # Fix using sudo with custom aliases
 alias tarr="tar -czvf"      # Create tar.gz archive
 alias untar="tar -xzvf"     # Extract tar.gz archive
 alias copy="xclip -selection clipboard"
-alias c=copy                # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
+alias c="copy"              # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
 
-_sto="/media/pendrive/"
-alias storage="cd $_sto"
+sto="/media/pendrive/"
+alias storage="cd $sto"
 alias sto=storage
 
-_enc="/media/veracrypt/"
+enc="/media/veracrypt/"
 function encrypted() {
-  if [ -w "$_enc" ]; then
-    cd "$_enc"
+  if [ -w "$enc" ]; then
+    cd "$enc"
   else
     echo "Veracrypt storage isn't mounted. Mounting now..."
     mount-encrypted-storage
     if [ $? == 0 ]; then
-      cd "$_enc"
+      cd "$enc"
     fi
   fi
 }
