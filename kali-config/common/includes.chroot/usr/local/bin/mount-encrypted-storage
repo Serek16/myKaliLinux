@@ -28,6 +28,9 @@ sudo mkdir -p "$VERACRYPT_MOUNT_POINT"
 
 # Mount the VeraCrypt volume
 sudo cryptsetup open --type tcrypt --veracrypt "$CONTAINER_PATH" encrypted-container
+if [ ! $? -eq 0 ]; then
+  exit 1
+fi
 sudo mount /dev/mapper/encrypted-container "$VERACRYPT_MOUNT_POINT" -o uid=$(whoami) -o gid=$(whoami)
 
 # Change permissions to user kali
