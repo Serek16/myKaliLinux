@@ -17,3 +17,23 @@ kali-desktop-xfce
 
 # Kali applications
 #<package>
+
+# My packages
+git
+zsh
+curl
+wget
+tmux
+trash-cli
+xclip
+fastfetch
+autossh
+wireguard
+openvpn
+openresolv
+cryptsetup
+numlockx
+hcxdumptool
+hcxtools
+mosquitto
+mosquitto-clients
