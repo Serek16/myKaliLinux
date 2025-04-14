@@ -6,7 +6,11 @@ wc -l <file>       # Show number of lines in a text file
 Ctrl + l           # Clear terminal output
 wol -p 9 <mac>     # Wake on lan command
 <cmd> | xclip -selection clipboard
-                   # Copy command output to a clipboard
+<cmd> | copy  or  <cmd> | c
+c <cmd>            # Copy command output to a clipboard
+ip route           # Get ip of the router (default gateway)
+nmcli dev wifi     # Show available wifi, transfer rate, signal strength and security
+
 
 # Discoover hosts in the network (Ping Scan) (faster)
 namp -sn 192.168.1.0/24
@@ -22,19 +26,13 @@ nmap -A 192.168.1.0/24
 # 443   - HTTPS
 # 25565 - MC SERVER
 
-ip route         # Get ip of the router (default gateway)
 
-
-# Show available wifi, transfer rate, signal strength and security
-nmcli dev wifi
-
-
-# Checksum
+###  Checksum  ###
 sha256sum ./<file_to_check>
 sha256sum -c ./<file_with_verification_checksum>
 
 
-# sftp - transfer files to a remote server
+###  sftp - transfer files to a remote server  ###
 sftp -oIdentityFile=<pathToKey> -poPort=<port> user@ip_addr
 lls -l         # show files on local device device
 ls -l          # show files on remote device
@@ -42,28 +40,36 @@ get <filename> # download file from remote device
 put <filename> # upload file to rmote device
 
 
-# Windows force shutdown immediately
+###  Windows force shutdown immediately  ###
 shutdown /s /f /t 0
 
 
-# Arch pacman
+###  Arch pacman  ###
 sudo pacman -Syu <package_name> # apt update && apt upgrade && apt install <package_name>
 sudo pacman -Rns <package_name> # uninstall package and no longer needed dependencies
 sudo pacman -Ss  <package_name> # search for package
 sudo pacman -Qi  <package_name> # check if package is installed. Print some info
 
 
+###  Rclone  ###
+# mount
+rclone mount onedrive:/Dokumenty ~/OneDrive --vfs-cache-mode full
+# unmount
+fusermount -u ~/OneDrive
+
+
+###  VeraCrypt  ###
 # Mount VeraCrypt drive with cryptsetup
-open --veracrypt --type tcrypt <path_to_drive> custom_name
+sudo open --veracrypt --type tcrypt <path_to_drive> custom_name
 sudo mkdir /mnt/veracrypt
 sudo mount /dev/mapper/custom_name /mnt/veracrypt -o uid=<user> -o gid=<user>
 
-# Close Veracrypt drive
+# Close VeraCrypt drive
 sudo umount /dev/mapper/custom_name
 sudo cryptsetup close custom_name
 
 
-# For i loop
+###  For i loop  ###
 for i in $(seq 1 10); do echo $i; done
 $ OR
 for i in $(seq 1 10);
@@ -72,7 +78,7 @@ do
 done
 
 
-# If statement
+###  If statement  ###
 if [ condition ]; then echo Hello, World; fi
 conditions:
     ! expression          True if the expression is false.
@@ -81,7 +87,7 @@ conditions:
     string1 = string2     True if string1 is the same as string2.
     string1 != string2    True if string1 is not the same as string2.
     integer1 -eq integer2 True if integer1 is numerically equal to integer2
-    integer1 -qt integer2 True if integer1 is numerically greater than integer2
+    integer1 -gt integer2 True if integer1 is numerically greater than integer2
     integer1 -lt integer2 True if integer1 is numerically less than integer2
     -d directory          True if the directory exists.
     -e file               True if the file exists.
@@ -90,11 +96,11 @@ conditions:
     -w file               True if the file exists and the write permission is set.
     -x file               True if the file exists and the execute permission is set.
 
-# Arithmetic expansion - increment integer
+###  Arithmetic expansion - increment integer  ###
 $((expression))
 $((i=i+1))
 
-# BASH special variables
+###  BASH special variables  ###
 $? - exit code of the last executed command
 $! - PID of the last executed command
 $0 - name of the script or shell
