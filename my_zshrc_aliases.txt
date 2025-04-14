@@ -1,6 +1,7 @@
 root="/home/kali/live-build-config"
 alias main="cd $root"
 alias hooks="cd $root/kali-config/common/hooks/live"
+alias packs="cd $root/kali-config/common/package-lists"
 
 chroot="$root/kali-config/common/includes.chroot"
 alias chroot="cd $chroot"
