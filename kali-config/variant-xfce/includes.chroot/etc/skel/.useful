@@ -6,7 +6,6 @@ wc -l <file>       # Show number of lines in a text file
 Ctrl + l           # Clear terminal output
 wol -p 9 <mac>     # Wake on lan command
 <cmd> | xclip -selection clipboard
-<cmd> | copy
                    # Copy command output to a clipboard
 
 # Discoover hosts in the network (Ping Scan) (faster)
@@ -18,9 +17,9 @@ namp -sS 192.168.1.0/24
 # Enable OS detection, version detection, script scanning, and traceroute (even more info, even longer)
 nmap -A 192.168.1.0/24
 
-# 22  - SSH
-# 80  - HTTP
-# 443 - HTTPS
+# 22    - SSH
+# 80    - HTTP
+# 443   - HTTPS
 # 25565 - MC SERVER
 
 ip route         # Get ip of the router (default gateway)
@@ -93,7 +92,7 @@ conditions:
 
 # Arithmetic expansion - increment integer
 $((expression))
-((i=i+1))
+$((i=i+1))
 
 # BASH special variables
 $? - exit code of the last executed command
