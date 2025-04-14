@@ -1,0 +1,11 @@
+# Uninstall firefox browser
+apt purge firefox-esr -y
+
+# Install LibreWolf browser
+apt update && apt install extrepo -y
+extrepo enable librewolf
+apt update && apt install librewolf -y
+
+## Add LibreWolf icon to a panel
+#launcher=$(grep -rnw '/home/kali/.config/' -e 'firefox-esr' | tail -n 1 | grep -o "^[^:]*")
+#cp /usr/share/applications/librewolf.desktop "$launcher"
