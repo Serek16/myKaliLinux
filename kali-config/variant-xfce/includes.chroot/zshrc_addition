@@ -23,6 +23,11 @@ alias c="copy"              # Copy cmd output to a clipboard e.g. "cat file.txt 
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
 
+# GNU's source-highlight
+export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+export LESS=' -R '
+
+
 sto="/media/pendrive/"
 alias storage="cd $sto"
 alias sto=storage
