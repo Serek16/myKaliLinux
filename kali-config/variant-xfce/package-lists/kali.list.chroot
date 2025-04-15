@@ -30,12 +30,13 @@ trash-cli
 xclip
 fastfetch
 autossh
-wireguard
 openvpn
 openresolv
+wireguard
 cryptsetup
 numlockx
 hcxdumptool
 hcxtools
 mosquitto
 mosquitto-clients
+source-highlight
