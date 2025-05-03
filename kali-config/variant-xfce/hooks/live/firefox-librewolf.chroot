@@ -1,11 +1,15 @@
-# Uninstall firefox browser
-apt purge firefox-esr -y
+# It's not that easy to remove firefox-esr
+## Uninstall firefox browser
+#apt purge firefox-esr -y
 
 # Install LibreWolf browser
 apt update && apt install extrepo -y
 extrepo enable librewolf
 apt update && apt install librewolf -y
 
-## Add LibreWolf icon to a panel
+# Replace Firefox with LibreWolf on the top panel
+sed -i 's/firefox-esr/librewolf/g' /etc/xdg/xfce4/panel/default.xml
+
+## Add LibreWolf icon on the top panel
 #launcher=$(grep -rnw '/home/kali/.config/' -e 'firefox-esr' | tail -n 1 | grep -o "^[^:]*")
 #cp /usr/share/applications/librewolf.desktop "$launcher"

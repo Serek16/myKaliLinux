@@ -1,7 +1,0 @@
-#!/bin/sh
-
-sed -i 's/firefox-esr/librewolf/g' /etc/xdg/xfce4/panel/default.xml
-
-## Replace Firefox icon to LibreWolf on the panel
-#launcher=$(grep -rnw '/home/kali/.config/xfce4/panel/' -e 'firefox-esr' | tail -n 1 | grep -o "^[^:]*")
-#cp /usr/share/applications/librewolf.desktop "$launcher"
