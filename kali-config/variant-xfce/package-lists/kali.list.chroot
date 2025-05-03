@@ -30,7 +30,6 @@ trash-cli
 xclip
 fastfetch
 autossh
-openvpn
 openresolv
 wireguard
 cryptsetup
@@ -40,3 +39,4 @@ hcxtools
 mosquitto
 mosquitto-clients
 source-highlight
+iptables-persistent
