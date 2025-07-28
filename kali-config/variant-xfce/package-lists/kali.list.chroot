@@ -40,3 +40,4 @@ mosquitto
 mosquitto-clients
 source-highlight
 iptables-persistent
+bat
