@@ -1,17 +1,24 @@
 Alt + .            # Paste the path used in a previous command
-watch <cmd>        # Execute a program periodically. Allows to see changes
+watch <cmd>        # Execute a program periodically. Allows to see changes (-n 0.5 -- every half sec)
 fg                 # Resume stopped job (meaning after "ctrl+z")
 sftp               # Interactive alternative to scp ('l<cmd>' to run locally  e.g. "lls -l")
 wc -l <file>       # Show number of lines in a text file
 Ctrl + l           # Clear terminal output
 wol -p 9 <mac>     # Wake on lan command
 <cmd> | xclip -selection clipboard
-<cmd> | copy  or  <cmd> | c
+<cmd> | c
 c <cmd>            # Copy command output to a clipboard
 ip route           # Get ip of the router (default gateway)
 nmcli dev wifi     # Show available wifi, transfer rate, signal strength and security
+find <dir>         # List every file and directory in specified directory
+find <dir> -type f #  ^ only files
+rsync --info=progress2 -ahz <src> <dest>
+                   # transfer files with progress bar & -a preserves permissions, timestamps etc, -h - human readable, -z compression trasnfer
+grep -rnw <dir> -e "<pattern>"
+                   # Find all files containing a specific text
 
 
+###  Nmap  ###
 # Discoover hosts in the network (Ping Scan) (faster)
 namp -sn 192.168.1.0/24
 
@@ -60,7 +67,7 @@ fusermount -u ~/OneDrive
 
 ###  VeraCrypt  ###
 # Mount VeraCrypt drive with cryptsetup
-sudo open --veracrypt --type tcrypt <path_to_drive> custom_name
+sudo cryptsetup open --veracrypt --type tcrypt <path_to_drive> custom_name
 sudo mkdir /mnt/veracrypt
 sudo mount /dev/mapper/custom_name /mnt/veracrypt -o uid=<user> -o gid=<user>
 
@@ -96,7 +103,7 @@ conditions:
     -w file               True if the file exists and the write permission is set.
     -x file               True if the file exists and the execute permission is set.
 
-###  Arithmetic expansion - increment integer  ###
+###  Arithmetic Expansion - increment integer  ###
 $((expression))
 $((i=i+1))
 

@@ -8,26 +8,28 @@ function cd() {
 
 alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
 alias upgrade="update"
-alias ld="du -hd 1"         # Show sizes of directories
-alias rm="trash-put"        # rm now puts files in trash instead of removing them pernamently
-alias rmm="/usr/bin/rm"
-alias mv="mv -i"            # Ask before overwritting
-alias mvv="/usr/bin/mv"
-alias cp="cp -i"            # Ask before overwritting
-alias cpp="/usr/bin/cp"
-alias sudo="sudo "          # Fix using sudo with custom aliases
-alias tarr="tar -czvf"      # Create tar.gz archive
-alias untar="tar -xzvf"     # Extract tar.gz archive
-alias copy="xclip -selection clipboard"
-alias c="copy"              # Copy cmd output to a clipboard e.g. "cat file.txt | copy"
+alias ld="du -hd 1"            # Show sizes of directories
+alias rm="trash-put"           # rm now puts files in trash instead of removing them pernamently
+alias rmm="/usr/bin/rm"        # tmp removes files pernamently
+alias mv="mv -i"               # Ask before overwritting
+alias mvv="/usr/bin/mv"        # default mv cmd
+alias cp="cp -i"               # Ask before overwritting
+alias cpp="/usr/bin/cp"        # default cp cmd
+alias sudo="sudo "             # Fix using sudo with custom aliases
+alias tarc="tar -czvf"         # Create tar.gz archive
+alias tarx="tar -xzvf"         # Extract tar.gz archive
+c="xclip -selection clipboard" # Copy cmd output to a clipboard
+alias copy="$c"                #  e.g. clipboard e.g. "cat file.txt | copy"
+alias c="$c"                   #  or "echo 'Hello' |c" or "c file.txt"
+alias txt="gnome-text-editor"  # gnome text editor cmd alias
+alias rs="rsync --info=progress2 -ahz" # copy files and show progress bar
+alias bat="batcat"             # upgraded cat/less
+alias cat="bat -pp"            # syntax highlight for cat
+alias less="bat -p --paging=always" # syntax highlight for less
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
 
-# GNU's source-highlight
-export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-export LESS=' -R '
-
-
+# Pendrive storage and veracrypt container aliases and commands
 sto="/media/pendrive/"
 alias storage="cd $sto"
 alias sto=storage
@@ -46,6 +48,8 @@ function encrypted() {
 }
 alias enc=encrypted
 
+
+# Hashcat utils commands
 function ion() {
   sudo ip link set wlan0 down
   sudo iw wlan0 set type managed
