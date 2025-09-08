@@ -15,6 +15,7 @@ apt-get -y remove --purge firmware-marvell-prestera
 # itself a recommendation of python3-pandas, and so on... Far down
 # the dep chain, and probably not needed for Kali users. While we're
 # at it, remove other documentation packages of significant size.
+# NOTE: it reduces the squashfs size of 9 Mb only, maybe not worth it.
 apt-get -y remove --purge numba-doc python-odf-doc ruby3.3-doc
 
 apt-get -y autoremove --purge
