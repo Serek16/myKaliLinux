@@ -3,19 +3,16 @@
 # Remove bloat
 apt-get -y remove --purge desktop-base tango-icon-theme xorg
 
-# Kali 2025.1: live image is too big, remove texlive-latex-extra,
-# as it's not a hard dependency, only a Recommends of gvmd-common
-apt-get -y remove --purge texlive-latex-extra
+# Remove texlive-latex-extra, a Recommends of gvmd-common.
+# Remove mupdf-tools, a Recommends of texlive-binaries -> dvisvgm.
+apt-get -y remove --purge mupdf-tools texlive-latex-extra
 
-# Kali 2025.3: live image is too big, remove firmware-marvell-prestera,
-# as it's filtered out in live-build/functions/firmwarelists.sh
+# Remove firmware-marvell-prestera, it's already filtered out in
+# live-build/functions/firmwarelists.sh.
 apt-get -y remove --purge firmware-marvell-prestera
 
-# Kali 2025.3: remove numba-doc, a recommendation of python3-numba,
-# itself a recommendation of python3-pandas, and so on... Far down
-# the dep chain, and probably not needed for Kali users. While we're
-# at it, remove other documentation packages of significant size.
-# NOTE: it reduces the squashfs size of 9 Mb only, maybe not worth it.
+# Remove some documentation. At the moment, it reduces the size of
+# the squashfs by 9 Mb only, so maybe not worth it...
 apt-get -y remove --purge numba-doc python-odf-doc ruby3.3-doc
 
 apt-get -y autoremove --purge
