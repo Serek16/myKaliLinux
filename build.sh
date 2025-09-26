@@ -23,7 +23,7 @@ image_name() {
     i386|amd64|arm64)
       echo "live-image-$KALI_ARCH.hybrid.iso"
     ;;
-    armel|armhf)
+    armhf)
       echo "live-image-$KALI_ARCH.img"
     ;;
   esac
