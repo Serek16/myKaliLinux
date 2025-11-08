@@ -1,4 +1,4 @@
-@reboot root BRIGHT_DIR=$(ls /sys/class/backlight | head -n 1) && echo 255 > /sys/class/backlight/$BRIGHT_DIR/brightness
+@reboot kali BRIGHT_DIR=$(ls /sys/class/backlight | head -n 1) && echo 255 > /sys/class/backlight/$BRIGHT_DIR/brightness
 @reboot root ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 @reboot kali numlockx on
 @reboot kali /usr/local/bin/custom-shortcuts.sh
