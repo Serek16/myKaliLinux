@@ -1,5 +1,5 @@
 # List all shortcuts
-#xfconf-quert -c xfce4-keyboard-shortcuts -lv
+#xfconf-query -c xfce4-keyboard-shortcuts -lv
 
 # Alt + A / Alt + Shift + A
 xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>A" --create --type string --set "left_workspace_key"
