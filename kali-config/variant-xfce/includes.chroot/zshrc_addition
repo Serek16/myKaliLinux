@@ -8,16 +8,17 @@ function cd() {
 
 alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
 alias upgrade="update"
-alias ld="du -hd 1"            # Show sizes of directories
+alias sudo="sudo "             # Fix using sudo with custom aliases
 alias rm="trash-put"           # rm now puts files in trash instead of removing them pernamently
 alias rmm="/usr/bin/rm"        # tmp removes files pernamently
 alias mv="mv -i"               # Ask before overwritting
 alias mvv="/usr/bin/mv"        # default mv cmd
 alias cp="cp -i"               # Ask before overwritting
 alias cpp="/usr/bin/cp"        # default cp cmd
-alias sudo="sudo "             # Fix using sudo with custom aliases
 alias tarc="tar -czvf"         # Create tar.gz archive
 alias tarx="tar -xzvf"         # Extract tar.gz archive
+alias tarls="tar --aexclude=\"*/*\" -tf" #  List top level files and directories of an archive
+alias ld="du -hd 1"            # Show sizes of directories
 c="xclip -selection clipboard" # Copy cmd output to a clipboard
 alias copy="$c"                #  e.g. clipboard e.g. "cat file.txt | copy"
 alias c="$c"                   #  or "echo 'Hello' |c" or "c file.txt"
@@ -28,6 +29,7 @@ alias cat="bat -pp"            # syntax highlight for cat
 alias less="bat -p --paging=always" # syntax highlight for less
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p -lman'"
 
 # Pendrive storage and veracrypt container aliases and commands
 sto="/media/pendrive/"
@@ -48,6 +50,13 @@ function encrypted() {
 }
 alias enc=encrypted
 
+function close_encrypted() {
+  echo "Closing encrypted VeraCrypt storage..."
+  cd ~
+  sudo cryptsetup close encrypted-container
+  sudo umount /media/veracrypt
+}
+alias=encx
 
 # Hashcat utils commands
 function ion() {
