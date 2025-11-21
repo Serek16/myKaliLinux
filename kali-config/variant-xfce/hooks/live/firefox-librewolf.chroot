@@ -1,4 +1,4 @@
-# It's not that easy to remove firefox-esr
+# It is actually not that easy to remove firefox-esr
 ## Uninstall firefox browser
 #apt purge firefox-esr -y
 
@@ -6,6 +6,19 @@
 apt update && apt install extrepo -y
 extrepo enable librewolf
 apt update && apt install librewolf -y
+
+# Install additional extensions: "SingleFile" and "User-Agent Switcher"
+sed -i '/"Install": \[/a \
+                "https://addons.mozilla.org/firefox/downloads/latest/single-file/latest.xpi",\
+                "https://addons.mozilla.org/firefox/downloads/latest/uaswitcher/latest.xpi",' \
+/usr/share/librewolf/distribution/policies.json
+
+# Set home page
+sed -i '/"policies": {/a \
+        "Homepage": {\
+            "URL": "http://duckduckgo.com/?kg=p&kae=d"\
+        },' usr/share/librewolf/distribution/policies.json
+
 
 # Replace Firefox with LibreWolf on the top panel
 sed -i 's/firefox-esr/librewolf/g' /etc/xdg/xfce4/panel/default.xml
