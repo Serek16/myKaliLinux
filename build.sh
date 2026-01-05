@@ -213,8 +213,7 @@ fi
 if [ ! -d "$(dirname $0)/kali-config/variant-$KALI_VARIANT" ]; then
   echo "ERROR: Unknown variant of Kali live configuration: $KALI_VARIANT" >&2
 fi
-require_package live-build "1:20250225+kali3"
-require_package debootstrap "1.0.97"
+require_package live-build "1:20250814+kali2"
 
 # We need root rights at some point
 if [ "$(whoami)" != "root" ]; then
