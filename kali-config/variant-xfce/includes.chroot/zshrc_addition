@@ -6,7 +6,12 @@ function cd() {
   builtin cd "$1" && ls
 }
 
-alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
+function bak() {
+  /usr/bin/cp -i "$1" "$1.bak"
+}
+
+if which pacman &> /dev/null; then alias update="sudo pacman -Syu";
+elif which apt &> /dev/null; then alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"; fi
 alias upgrade="update"
 alias sudo="sudo "             # Fix using sudo with custom aliases
 alias rm="trash-put"           # rm now puts files in trash instead of removing them pernamently
@@ -30,6 +35,45 @@ alias less="bat -p --paging=always" # syntax highlight for less
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
 export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p -lman'"
+
+# Disable Ctrl + S - freeze terminal output
+stty -ixon
+#bind -r "\C-s"
+
+### git
+alias ga="mygit add"
+alias gr="mygit restore"
+alias grs="mygit restore --staged"
+alias gs="git status"
+alias gl="git log --oneline --decorate"
+alias glo="git log"
+
+mygit() {
+    local files
+    local gdiff
+
+    if [[ "$1" == "restore" && "$2" == "--staged" ]]; then
+      gdiff=$(git diff --name-only --cached)
+    elif [[ "$1" == "add" && "$2" == "." ]]; then
+      git add .
+    else
+      gdiff=$({git diff --name-only; git ls-files --others --exclude-standard})
+    fi
+
+    if [[ ! $? -eq 0 || -z $gdiff ]]; then
+      return
+    fi
+
+    files=$(echo $gdiff | fzf -m)
+    if [[ -n "$files" ]]; then
+       git $@ $(echo -e $files | tr '\n' ' ')
+    fi
+}
+
+if [ -f ~/.zshrcplus ]; then
+  source ~/.zshrcplus
+fi
+
 
 # Pendrive storage and veracrypt container aliases and commands
 sto="/media/pendrive/"
@@ -72,10 +116,9 @@ function ioff() {
   sudo systemctl stop wpa_supplicant
 }
 
-numlockx on
 
 # Launch tmux at start
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if ! cat /tmp/tmux_off &> /dev/null && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   session="main"
 
   tmux has-session -t $session 2>/dev/null

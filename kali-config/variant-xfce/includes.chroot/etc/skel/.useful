@@ -1,4 +1,4 @@
-Alt + .            # Paste the path used in a previous command
+<Alt> + .          # Paste the path used in a previous command
 watch <cmd>        # Execute a program periodically. Allows to see changes (-n 0.5 -- every half sec)
 fg                 # Resume stopped job (meaning after "ctrl+z")
 sftp               # Interactive alternative to scp ('l<cmd>' to run locally  e.g. "lls -l")
@@ -16,11 +16,12 @@ rsync --info=progress2 -ahz <src> <dest>
                    # transfer files with progress bar & -a preserves permissions, timestamps etc, -h - human readable, -z compression trasnfer
 grep -rnw <dir> -e "<pattern>"
                    # Find all files containing a specific text
-
+tar -tf <archive> | awk -F/ '{print $1}' | uniq
+                   # List top level files and directories of an archive
 
 ###  Nmap  ###
 # Discoover hosts in the network (Ping Scan) (faster)
-namp -sn 192.168.1.0/24
+nmap -sn 192.168.1.0/24
 
 # Discover hosts in the network  and check for open ports  (longer, more info)
 namp -sS 192.168.1.0/24
@@ -65,6 +66,34 @@ rclone mount onedrive:/Dokumenty ~/OneDrive --vfs-cache-mode full
 fusermount -u ~/OneDrive
 
 
+###  ntfy  ###
+# Send notification
+curl -d "Hello, World\!" serek16.duckdns.org/myTopic
+# Send notification depending on result of a command
+<command returns true(0) or false(>=1)> && <curl -d "true"...> || <curl -d "false"...>
+# e.g.
+cat /tmp/file && curl -d "It worked\!" serek16.duckdns.org/myTopic || curl -d "Didn't work\!" serek16.duckdns.org/myTopic
+
+### Reverse SSH  ###
+# access to
+sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT 
+sudo iptables-save > /etc/iptables/rule.v4
+sudo systemctl start ssh
+sudo systemctl enable ssh
+sudo nano /etc/ssh/sshd_config
+ # change "#GatewayPorts no" to "GatewayPorts yes"
+autossh -f -N -i <ssh-key> -R 2222:localhost:22 <user>@<host>
+# access from
+ssh -p 2222 <user>@localhost
+
+
+###  Git  ###
+# Show how file looked at specific commit
+git show <commit_id / HEAD~[num]>:<file_path>
+
+# Revert back to pristine last commit state - remove untracked and .gitingored files
+git reset --hard; && git clean -dfx
+
 ###  VeraCrypt  ###
 # Mount VeraCrypt drive with cryptsetup
 sudo cryptsetup open --veracrypt --type tcrypt <path_to_drive> custom_name
@@ -76,7 +105,9 @@ sudo umount /dev/mapper/custom_name
 sudo cryptsetup close custom_name
 
 
-###  For i loop  ###
+###  Bash Scripting  ###
+
+# For i loop
 for i in $(seq 1 10); do echo $i; done
 $ OR
 for i in $(seq 1 10);
@@ -84,32 +115,59 @@ do
     echo $i
 done
 
+# If statement
+if [ <condition> ]; then <commands>; fi
+if [ <condition> ]; then <commands>; else <commands>; fi
+if [ <condition> ]; then <commands>: elif [ <condition> ]; then commands; fi
 
-###  If statement  ###
-if [ condition ]; then echo Hello, World; fi
-conditions:
-    ! expression          True if the expression is false.
-    -n string             True if the length of the string is greater than zero.
-    -z string             True if the length of the string is zero. That is, it's an empty string.
-    string1 = string2     True if string1 is the same as string2.
-    string1 != string2    True if string1 is not the same as string2.
-    integer1 -eq integer2 True if integer1 is numerically equal to integer2
-    integer1 -gt integer2 True if integer1 is numerically greater than integer2
-    integer1 -lt integer2 True if integer1 is numerically less than integer2
-    -d directory          True if the directory exists.
-    -e file               True if the file exists.
-    -s file               True if the file exists with a size of more than zero.
-    -r file               True if the file exists and the read permission is set.
-    -w file               True if the file exists and the write permission is set.
-    -x file               True if the file exists and the execute permission is set.
+  conditions:            True if...
+  -----------            ----------
+  ! expression           expression is false
+  -n string              length of the string is greater than zero
+  -z string              length of the string is zero. That is, it's an empty string
+  string1 = string2      string1 is the same as string2
+  string1 != string2     string1 is not the same as string2
+  integer1 -eq integer2  integer1 is numerically equal to integer2
+  integer1 -gt integer2  integer1 is numerically greater than integer2
+  integer1 -lt integer2  integer1 is numerically less than integer2
+  -d directory           directory exists
+  -e file                file exists
+  -s file                file exists with a size of more than zero
+  -r file                file exists and the read permission is set
+  -w file                file exists and the write permission is set
+  -x file                file exists and the execute permission is set
 
-###  Arithmetic Expansion - increment integer  ###
+# Arithmetic Expansion - increment integer
 $((expression))
 $((i=i+1))
 
-###  BASH special variables  ###
-$? - exit code of the last executed command
-$! - PID of the last executed command
-$0 - name of the script or shell
-$@ - all positional parameters
-$# - number of positional parameters
+# Bash Special Variables
+  $? - exit code of the last executed command
+  $! - PID of the last executed command
+  $0 - name of the script or shell
+  $@ - all positional parameters
+  $# - number of positional parameters
+
+# Bash Output Redirection
+  >                          Redirect stdout to a file (overwrites if file exists)
+  >>                         Append stdout to a file (creates if doesn't exist)
+  2>                         Redirect stderr to a file (overwrites if file exists)
+  2>>                        Append stderr to a file (creates if doesn't exist)
+  &>                         Redirect both stdout and stderr to a file (overwrites)
+  &>>                        Append both stdout and stderr to a file
+  2>&1                       Redirect stderr to stdout (must come after stdout redirection)
+  1>&2                       Redirect stdout to stderr
+  > /dev/null                Discard stdout (send to null device)
+  2> /dev/null               Discard stderr (send to null device)
+  &> /dev/null               Discard both stdout and stderr
+  > file1.txt 2> file2.txt   Redirect stdout to file1 and stderr to file2
+  >> file1.txt 2>> file2.txt Append stdout to file1 and stderr to file2
+  | tee output.txt           Send stdout to both terminal and file
+  2>&1 | tee output.txt      Send both stdout and stderr to terminal and file
+
+
+###  Shortcuts  ###
+Ctrl + A + (W)   - Tmux open window list view
+Ctrl + A + (C)   - Tmux create new window
+Alt + N          - Nano show/hide line numbers
+

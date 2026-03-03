@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Plain Text
+scope: source.plaintext
+
+contexts:
+  main:
+    - match: '#.*$'
+      scope: comment.line
+      captures:
+        0: comment.line

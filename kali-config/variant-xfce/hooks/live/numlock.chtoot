@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if grep -q "^\[Seat:\*\]" "$LIGHTDM_CONF" 2>/dev/null; then
+  # [Seat:*] exists — insert the line after it
+  sed -i '/^\[Seat:\*\]/a display-setup-script=numlockx on' "$LIGHTDM_CONF"
+else
+  # No [Seat:*] — append it
+  echo -e "\n[Seat:*]\ndisplay-setup-script=numlockx on" >> "$LIGHTDM_CONF"
+fi
