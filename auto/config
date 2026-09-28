@@ -78,9 +78,6 @@ case "$arch" in
   amd64)
   lb_opts+=(--debian-installer live)
   ;;
-  i386)
-  lb_opts+=(--debian-installer live --linux-flavours 686-pae)
-  ;;
   arm64)
   lb_opts+=(--bootloaders grub-efi --uefi-secure-boot disable)
   ;;

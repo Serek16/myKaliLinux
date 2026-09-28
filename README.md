@@ -156,7 +156,7 @@ Build a Kali Linux Live image.
 
 Build options:
   -a, --arch ARCH              Build an image for this architecture (default: amd64)
-                               Supported: amd64 arm64 armhf i386
+                               Supported: amd64 arm64 armhf
   -b, --branch BRANCH          Kali branch used to build the image (default: kali-rolling)
                                Supported: kali-rolling kali-dev kali-last-snapshot
   -k, --keep                   Keep intermediary build artifacts

@@ -65,7 +65,7 @@ KNOWN_CACHING_PROXIES="\
 DETECTED_CACHING_PROXY=
 
 ## Supported values
-SUPPORTED_ARCHITECTURES="amd64 arm64 armhf i386"
+SUPPORTED_ARCHITECTURES="amd64 arm64 armhf"
 SUPPORTED_BRANCHES="kali-rolling kali-dev kali-last-snapshot"
 SUPPORTED_VARIANTS=$( for d in ./kali-config/variant-*/; do d="${d%/}"; echo "${d##*/variant-}"; done | paste -sd' ' )
 
@@ -466,9 +466,6 @@ case "${ARCH,,}" in
     ;;
   armhf|armv7l|armv7|armv6l)
     ARCH=armhf
-    ;;
-  i386|i486|i586|i686|x86)
-    ARCH=i386
     ;;
 esac
 

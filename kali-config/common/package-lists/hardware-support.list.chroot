@@ -5,7 +5,7 @@
 ##
 kali-linux-firmware
 kali-linux-firmware-graphics
-#if ARCHITECTURES amd64 i386
+#if ARCHITECTURES amd64
 amd64-microcode
 intel-microcode
 #endif
