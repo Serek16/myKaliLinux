@@ -499,9 +499,6 @@ unset _pkgs
 [[ "${BUILD_MIRROR}" =~ ^[A-Za-z][A-Za-z0-9+.-]*://[^[:space:]]+$ ]] \
   || fail_invalid -m "${BUILD_MIRROR}" "must be a URL with no spaces (e.g. http://host/path)"
 
-## Normalize VERSION
-VERSION="${VERSION,,}"
-
 ## Filename structure for final file
 if [ "${ARCH}" = "armhf" ]; then
   OUT_EXT=img
