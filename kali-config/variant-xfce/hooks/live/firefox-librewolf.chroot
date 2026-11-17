@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # It is actually not that easy to remove firefox-esr
 ## Uninstall firefox browser
 #apt purge firefox-esr -y

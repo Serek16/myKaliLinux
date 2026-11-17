@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mkdir -p /home/kali
 
 # Run by root but install for kali
@@ -15,6 +17,10 @@ sed -i 's/^ZSH_THEME=.*$/ZSH_THEME="kali-like"/' /home/kali/.zshrc
 
 cat /zshrc_addition >> /home/kali/.zshrc
 rm /zshrc_addition
+
+# Install zsh/fzf History Search
+git clone https://github.com/joshskidmore/zsh-fzf-history-search "$ZSH/custom/plugins/zsh-fzf-history-search"
+perl -i -pe 'if (/^plugins=\(/ && !/\bzsh-fzf-history-search\b/) { s/\)/ zsh-fzf-history-search)/; }' "$HOME/.zshrc"
 
 #     kali:kali
 chown 1000:1000 -R /home/kali
