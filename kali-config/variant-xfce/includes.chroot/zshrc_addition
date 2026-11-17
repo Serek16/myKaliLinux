@@ -6,7 +6,63 @@ function cd() {
   builtin cd "$1" && ls
 }
 
-alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
+function bak() {
+  /usr/bin/cp -i "$1" "$1.bak"
+}
+
+function rs() {
+  if [ $# -gt 2 ]; then
+    echo "Only two arguments are available at the moment"
+    return 1
+  fi
+
+  if [ -f "$1" ]; then
+    if [ -f "$2" ] || ([ -d "$2" ] && [ -f "$(realpath "$2")/$(basename "$1")" ]); then
+      read -r "answer?File \"$(realpath "$2")/$(basename "$1")\" already exists. Replace? (y/N): "
+      if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+        return 1
+      fi
+    fi
+    if [[ ${2[-1]} == "/" ]] && [ ! -d "$2" ]; then
+      read -r "answer?Directory \"$(basename "$2")\" doesn't exist. Replace? (y/N): "
+      if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+        return 1
+      fi
+    fi
+    rsync --info=progress2 -ahz "$1" "$2"
+    return
+  fi
+
+  if [ -d "$1" ] && [[ ${2[-1]} == "/" ]]; then
+    if [ -d "$(realpath "$2")/$(basename "$1")" ]; then
+      read -r "answer?Directory \"$(realpath "$2")/$(basename "$1")\" already exist. Replace? (y/N): "
+      if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+        return 1
+      fi
+    fi
+    rsync --info=progress2 -ahz "$(realpath "$1")/" "$2/$(basename "$1")"
+    return
+  fi
+
+  if [ -d "$1" ] && [[ ${2[-1]} != "/" ]]; then
+    if [ -d "$2" ]; then
+      read -r "answer?Directory \"$(realpath "$2")\" already exist. Replace? (y/N): "
+      if [[ ! "$answer" =~ ^[Yy]$ ]]; then
+        return 1
+      fi
+    fi
+    rsync --info=progress2 -ahz "$(realpath "$1")/" "$2"
+    return
+  fi
+
+  echo "Error"
+  if [ ! -f "$1" ]; then
+    echo "No such file \"$1\""
+  fi
+}
+
+[ -f /usr/bin/pacman ] && alias update="sudo pacman -Syu"
+[ -f /usr/bin/apt ]    && alias update="sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y"
 alias upgrade="update"
 alias sudo="sudo "             # Fix using sudo with custom aliases
 alias rm="trash-put"           # rm now puts files in trash instead of removing them pernamently
@@ -19,17 +75,52 @@ alias tarc="tar -czvf"         # Create tar.gz archive
 alias tarx="tar -xzvf"         # Extract tar.gz archive
 alias tarls="tar --aexclude=\"*/*\" -tf" #  List top level files and directories of an archive
 alias ld="du -hd 1"            # Show sizes of directories
-c="xclip -selection clipboard" # Copy cmd output to a clipboard
-alias copy="$c"                #  e.g. clipboard e.g. "cat file.txt | copy"
-alias c="$c"                   #  or "echo 'Hello' |c" or "c file.txt"
+alias c="xclip -r -selection clipboard" # Copy cmd output to a clipboard `echo Hello |c` or `c file.txt`
 alias txt="gnome-text-editor"  # gnome text editor cmd alias
-alias rs="rsync --info=progress2 -ahz" # copy files and show progress bar
-alias bat="batcat"             # upgraded cat/less
-alias cat="bat -pp"            # syntax highlight for cat
-alias less="bat -p --paging=always" # syntax highlight for less
+alias ntfyOK='curl -d "OK" serek16.duckdns.org/myTopic'
+alias ntfyErr='curl -d "Err" serek16.duckdns.org/myTopic'
+bat="bat"
+[ -f /usr/bin/batcat ] && bat="batcat"
+alias cat="$bat -pp"                 # syntax highlight for cat
+alias less="$bat -p --paging=always" # syntax highlight for less
 
 export EDITOR=/usr/bin/nano # Use nano as default editor for some command
-export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | batcat -p -lman'"
+export MANPAGER="$bat -plman"
+
+[ -s ~/.zshrcplus ] && source ~/.zshrcplus
+
+# Disable Ctrl + S - freeze terminal output
+stty -ixon
+
+### git
+alias ga="mygit add"
+alias gr="mygit restore"
+alias grs="mygit restore --staged"
+alias gs="git status"
+alias gl="git log --oneline --decorate"
+alias glo="git log"
+
+mygit() {
+    local files
+    local gdiff
+
+    if [[ "$1" == "restore" && "$2" == "--staged" ]]; then
+      gdiff=$(git diff --name-only --cached)
+    elif [[ "$1" == "add" && "$2" == "." ]]; then
+      git add .
+    else
+      gdiff=$({git diff --name-only; git ls-files --others --exclude-standard})
+    fi
+
+    if [[ ! $? -eq 0 || -z $gdiff ]]; then
+      return
+    fi
+
+    files=$(echo $gdiff | fzf -m)
+    if [[ -n "$files" ]]; then
+       git $@ $(echo -e $files | tr '\n' ' ')
+    fi
+}
 
 # Pendrive storage and veracrypt container aliases and commands
 sto="/media/pendrive/"
@@ -72,10 +163,15 @@ function ioff() {
   sudo systemctl stop wpa_supplicant
 }
 
-numlockx on
+# https://stackoverflow.com/a/24967501
+manopt() {
+  local cmd=$1 opt=$2
+  [[ $opt == -* ]] || { (( ${#opt} == 1 )) && opt="-$opt" || opt="--$opt"; }
+  man "$cmd" | col -b | awk -v opt="$opt" -v RS= '$0 ~ "(^|,)[[:blank:]]+" opt "([[:punct:][:space:]]|$)"'
+}
 
 # Launch tmux at start
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+if [ ! -f "$HOME/.tmux_off" ] && command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   session="main"
 
   tmux has-session -t $session 2>/dev/null
