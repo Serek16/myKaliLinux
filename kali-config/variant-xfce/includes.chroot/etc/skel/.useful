@@ -169,5 +169,7 @@ $((i=i+1))
 ###  Shortcuts  ###
 Ctrl + A -> W   - Tmux open window list view
 Ctrl + A -> C   - Tmux create new window
+Prefix -> !     - Tmux move current pane to a new window
+Prefix -> J     - Tmux* move current pane to a specific window
+Prefix -> Space - Tmux switch layouts horizontal/vertical
 Alt + N         - Nano show/hide line numbers
-

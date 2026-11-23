@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Enable Num Lock
+Exec=numlockx on
+OnlyShowIn=XFCE;

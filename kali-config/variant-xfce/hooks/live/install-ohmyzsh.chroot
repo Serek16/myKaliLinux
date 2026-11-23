@@ -15,8 +15,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 mv /kali-like.zsh-theme /home/kali/.oh-my-zsh/themes/kali-like.zsh-theme
 sed -i 's/^ZSH_THEME=.*$/ZSH_THEME="kali-like"/' /home/kali/.zshrc
 
-cat /zshrc_addition >> /home/kali/.zshrc
-rm /zshrc_addition
+cat /zshrc-addition >> /home/kali/.zshrc
+rm /zshrc-addition
 
 # Install zsh/fzf History Search
 git clone https://github.com/joshskidmore/zsh-fzf-history-search "$ZSH/custom/plugins/zsh-fzf-history-search"
