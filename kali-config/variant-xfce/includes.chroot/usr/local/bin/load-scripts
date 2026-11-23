@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -f "/tmp/load-script-done" ]; then
+  echo "Scripts are already loaded"
+  exit 1
+fi
+touch "/tmp/load-script-done"
+
+# Define the base paths
+sto="/media/pendrive"
+enc="/media/veracrypt"
+
+script1="$sto/scripts/myScript.sh"
+script2="$sto/.myScript.sh"
+script3="$enc/scripts/myScript.sh"
+script4="$enc/.myScript.sh"
+
+# Check each location and run every script that is found
+if [ -s "$script1" ]; then
+  echo "Launching $script1"
+  "$script1"
+fi
+if [ -s "$script2" ]; then
+  echo "Launching $script2"
+  "$script2"
+fi
+if [ -s "$script3" ]; then
+  echo "Launching $script3"
+  "$script3"
+fi
+if [ -s "$script4" ]; then
+  echo "Launching $script4"
+  "$script4"
+fi
+
+if [ ! -s "$script1" ] && [ ! -s "$script2" ] && [ ! -s "$script3" ] && [ ! -s "$script4" ];
+  echo "No script found in any of the expected locations."
+  exit 1
+fi

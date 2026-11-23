@@ -4,23 +4,23 @@
 PENDRIVE_MOUNT_POINT="/media/pendrive"
 CONTAINER_PATH="$PENDRIVE_MOUNT_POINT/container.hc"
 VERACRYPT_MOUNT_POINT="/media/veracrypt"
-STORAGE_SCRIPT="$HOME/.load_storage.sh"
+STORAGE_SCRIPT="/usr/local/bin/mount-storage"
 
 # Check if /media/Pendrive exists
 if [ ! -d "$PENDRIVE_MOUNT_POINT" ]; then
-    echo "$PENDRIVE_MOUNT_POINT not found. Running $STORAGE_SCRIPT..."
+  echo "$PENDRIVE_MOUNT_POINT not found. Running $STORAGE_SCRIPT..."
 
-    # Run the script to load the storage
-    if ! bash "$STORAGE_SCRIPT"; then
-        echo "Failed to load storage. Exiting."
-        exit 1
-    fi
+  # Run the script to load the storage
+  if ! bash "$STORAGE_SCRIPT"; then
+    echo "Failed to load storage. Exiting."
+    exit 1
+  fi
 
-    # Check again if /media/Pendrive exists after running the script
-    if [ ! -d "$PENDRIVE_MOUNT_POINT" ]; then
-        echo "Storage script did not create $PENDRIVE_MOUNT_POINT. Exiting."
-        exit 1
-    fi
+  # Check again if /media/Pendrive exists after running the script
+  if [ ! -d "$PENDRIVE_MOUNT_POINT" ]; then
+    echo "Storage script did not create $PENDRIVE_MOUNT_POINT. Exiting."
+    exit 1
+  fi
 fi
 
 # Create mount point directory if it does not exist
@@ -38,8 +38,8 @@ sudo mount /dev/mapper/encrypted-container "$VERACRYPT_MOUNT_POINT" -o uid=$(who
 
 # Check if the mount was successful
 if [ $? -eq 0 ]; then
-    echo "Volume successfully mounted to $VERACRYPT_MOUNT_POINT"
+  echo "Volume successfully mounted to $VERACRYPT_MOUNT_POINT"
 else
-    echo "Failed to mount the volume. Please check your password and try again."
-    exit 1
+  echo "Failed to mount the volume. Please check your password and try again."
+  exit 1
 fi

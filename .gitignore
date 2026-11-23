@@ -11,8 +11,8 @@ cache/
 chroot/
 ## `lb` will generate this folder, `config`.
 ##   Which is why our config directory is called `kali-config`
-config/
-local/
+/config/
+/local/
 .lock
 .mirror
 binary.*
